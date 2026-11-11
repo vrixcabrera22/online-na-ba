@@ -157,8 +157,8 @@ See `.env.example` for the full list.
 | Variable | Used for | Exposed to browser? |
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL | Yes |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public client key (limited by RLS) | Yes |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server-only writes (checks, stats, incidents) | **No** |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Public client key, `sb_publishable_...` (limited by RLS) | Yes |
+| `SUPABASE_SECRET_KEY` | Server-only key, `sb_secret_...`, for writing checks, stats and incidents | **No** |
 | `CRON_SECRET` | Protects `/api/cron/check` | **No** |
 | `RESEND_API_KEY` | Sending alert emails | **No** |
 
