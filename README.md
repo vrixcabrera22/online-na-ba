@@ -141,6 +141,8 @@ npm run dev
 
 Open http://localhost:3000/fil (or `/en`).
 
+Run the tests, typecheck and lint with `npm test`, `npm run typecheck` and `npm run lint`.
+
 To trigger a check run by hand:
 
 ```bash
@@ -166,7 +168,13 @@ A demo account with sample monitors will be listed here and on the About page at
 
 ## Hard problems solved
 
-_To be written up during the build._ Planned topics:
+### A healthy site that `fetch()` said was down
+
+On the very first test run, Virtual Pag-IBIG came back **down** with `UND_ERR_RES_CONTENT_LENGTH_MISMATCH`, even though it loaded fine in a browser. A lower-level request showed the real cause: its server sends **obsolete folded headers** (a `Set-Cookie` value continued on the next line after a leading space). Browsers accept this, but Node's strict HTTP parser rejects the whole response.
+
+The checker now uses Node's `http`/`https` client with `insecureHTTPParser` (as lenient as a browser) instead of `fetch()`. That's safe here because we only read the status line and `Location` header. It also follows redirects by hand, under a single 15-second deadline, and destroys the socket as soon as the headers arrive, so no page is ever downloaded. A regression test reproduces the bad header with a raw TCP server.
+
+### Still to write up
 
 - Running 5-minute checks on free tiers (Supabase Cron calling a protected Vercel route)
 - Status rules that are fair to bot-blocking sites (4xx as up, 429 as slow)
