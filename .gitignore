@@ -1,0 +1,24 @@
+# dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+build/
+
+# env files (secrets) — only .env.example is committed
+.env*
+!.env.example
+
+# Supabase local
+supabase/.temp/
+supabase/.branches/
+
+# misc
+.DS_Store
+*.log
+.vercel
+
+# local AI assistant config (kept out of the repo)
+CLAUDE.md
+.claude/
