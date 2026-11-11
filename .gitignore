@@ -1,24 +1,35 @@
 # dependencies
-node_modules/
+/node_modules
+/.pnp
+.pnp.*
 
-# Next.js
-.next/
-out/
-build/
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+/build
+next-env.d.ts
+*.tsbuildinfo
 
 # env files (secrets) — only .env.example is committed
 .env*
 !.env.example
 
-# Supabase local
+# supabase local
 supabase/.temp/
 supabase/.branches/
 
-# misc
-.DS_Store
-*.log
+# vercel
 .vercel
 
-# local AI assistant config (kept out of the repo)
+# misc
+.DS_Store
+*.pem
+*.log
+
+# local assistant/editor files (kept out of the repo)
 CLAUDE.md
+AGENTS.md
 .claude/
