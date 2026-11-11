@@ -1,0 +1,19 @@
+{
+  "Metadata": {
+    "title": "Online Na Ba? — Philippine government website status",
+    "description": "See whether Pag-IBIG, SSS, PhilHealth and other government websites are up right now, and the best times to try."
+  },
+  "Header": {
+    "siteName": "Online Na Ba?",
+    "languageLabel": "Language",
+    "switchTo": "Filipino"
+  },
+  "Home": {
+    "title": "Are government websites online?",
+    "tagline": "We check Pag-IBIG, SSS, PhilHealth and more every 5 minutes, so you know when it's worth trying.",
+    "comingSoon": "We're still collecting data. The status board is coming soon."
+  },
+  "Footer": {
+    "disclaimer": "Unofficial. Online Na Ba? is not affiliated with any government agency. We only check whether public pages respond."
+  }
+}
