@@ -23,7 +23,15 @@ export async function POST(request: Request) {
   }
 
   const startedAt = Date.now();
-  const supabase = createAdminClient();
+  let supabase: ReturnType<typeof createAdminClient>;
+  try {
+    supabase = createAdminClient();
+  } catch (err) {
+    // requireEnv's message names the missing variable, never its value.
+    const detail = err instanceof Error ? err.message : String(err);
+    console.error("[cron/check] misconfigured", detail);
+    return NextResponse.json({ error: "server misconfigured", detail }, { status: 500 });
+  }
 
   const { data: monitors, error: loadError } = await supabase
     .from("monitors")
