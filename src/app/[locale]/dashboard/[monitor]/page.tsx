@@ -22,9 +22,34 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/dashboar
 // only be read inside the Suspense boundary (in MonitorDetail), not here.
 export default function MonitorPage({ params }: PageProps<"/[locale]/dashboard/[monitor]">) {
   return (
-    <Suspense fallback={<div className="h-96 animate-pulse rounded-xl bg-unknown-bg" aria-hidden="true" />}>
+    <Suspense fallback={<MonitorSkeleton />}>
       <MonitorDetail params={params} />
     </Suspense>
+  );
+}
+
+/**
+ * Same shape and roughly the same height as the real page, so the footer
+ * doesn't jump when the content streams in (that was a 0.2 layout shift).
+ */
+function MonitorSkeleton() {
+  const block = "animate-pulse rounded-xl bg-unknown-bg";
+  return (
+    <div className="space-y-8" aria-hidden="true">
+      <div className="h-5 w-40 animate-pulse rounded bg-unknown-bg" />
+      <div className="space-y-3">
+        <div className="h-9 w-64 animate-pulse rounded-lg bg-unknown-bg" />
+        <div className="h-5 w-80 max-w-full animate-pulse rounded bg-unknown-bg" />
+      </div>
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} className={`h-[5.5rem] ${block}`} />
+        ))}
+      </div>
+      <div className={`h-[24rem] ${block}`} />
+      <div className={`h-[44rem] sm:h-[26rem] ${block}`} />
+      <div className={`h-40 ${block}`} />
+    </div>
   );
 }
 
