@@ -15,5 +15,6 @@ export function siteUrl(): string {
 
 /** Honest User-Agent: names the bot and links to the page explaining it. */
 export function checkerUserAgent(): string {
-  return `OnlineNaBaBot/1.0 (+${siteUrl()}/en/about)`;
+  // e.g. "shey/1.0 (uptime monitor; +https://online-na-ba.vercel.app/en/about)"
+  return `shey/1.0 (uptime monitor; +${siteUrl()}/en/about)`;
 }

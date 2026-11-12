@@ -9,7 +9,7 @@ import {
   type RequestFn,
 } from "./check";
 
-const userAgent = "OnlineNaBaBot/1.0 (+https://example.com/en/about)";
+const userAgent = "shey/1.0 (uptime monitor; +https://example.com/en/about)";
 
 describe("classify", () => {
   it.each([
