@@ -1,4 +1,6 @@
+import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
+import { STATUS_TAG } from "@/lib/status";
 import { checkUrl, mapWithConcurrency } from "@/lib/check";
 import { isAuthorizedCronRequest } from "@/lib/cron-auth";
 import { checkerUserAgent } from "@/lib/env";
@@ -75,6 +77,9 @@ export async function POST(request: Request) {
       );
     }
     events = data ?? [];
+    // Tell Next.js the cached status pages are stale, so the next visit
+    // refreshes them with this run's results.
+    revalidateTag(STATUS_TAG, "max");
   }
 
   const summary = {
