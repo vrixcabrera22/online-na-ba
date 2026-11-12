@@ -62,23 +62,28 @@ export function BestTimeHeatmap({ cells, since }: { cells: Cell[]; since: string
     });
   };
 
-  const cellButton = (dow: number, h: number, size: string) => {
+  // Plain cells, not buttons: 168 tab stops would be unusable with a keyboard,
+  // and small buttons fail tap-target rules. Each cell carries its numbers as
+  // screen-reader text; one pointer handler on the table shows them visually.
+  const cell = (dow: number, h: number, size: string) => {
     const key = `${dow}-${h}`;
     const lv = level(byKey.get(key));
     return (
-      <button
-        type="button"
-        aria-label={label(dow, h)}
-        aria-pressed={selected === key}
-        onClick={() => setSelected(key)}
-        onMouseEnter={() => setSelected(key)}
-        onFocus={() => setSelected(key)}
-        className={`block w-full rounded-[3px] ${size} ${
-          lv === null ? "border border-dashed border-border bg-transparent" : HEAT[lv]
-        } ${selected === key ? "outline-2 outline-offset-1 outline-foreground" : ""}`}
-      />
+      <td key={dow * 100 + h} data-cell={key} className="p-0">
+        <span
+          className={`block w-full rounded-[3px] ${size} ${
+            lv === null ? "border border-dashed border-border" : HEAT[lv]
+          } ${selected === key ? "outline-2 outline-offset-1 outline-foreground" : ""}`}
+        />
+        <span className="sr-only">{label(dow, h)}</span>
+      </td>
     );
   };
+  const pick = (e: React.PointerEvent) => {
+    const key = (e.target as HTMLElement).closest("td")?.dataset.cell;
+    if (key) setSelected(key);
+  };
+  const tableEvents = { onPointerOver: pick, onPointerDown: pick };
 
   if (!summary.enoughData) {
     return (
@@ -130,7 +135,7 @@ export function BestTimeHeatmap({ cells, since }: { cells: Cell[]; since: string
       </ul>
 
       {/* Phone: days across, hours down (each cell stays tappable). */}
-      <table className="mt-4 w-full table-fixed border-separate border-spacing-[2px] sm:hidden">
+      <table {...tableEvents} className="mt-4 w-full table-fixed border-separate border-spacing-[2px] sm:hidden">
         <thead>
           <tr>
             <th scope="col" className="w-12 text-left text-[11px] font-medium text-muted">
@@ -149,16 +154,14 @@ export function BestTimeHeatmap({ cells, since }: { cells: Cell[]; since: string
               <th scope="row" className="pr-1 text-left text-[11px] font-normal whitespace-nowrap text-muted">
                 {hour(h)}
               </th>
-              {DAY_ORDER.map((d) => (
-                <td key={d}>{cellButton(d, h, "h-4")}</td>
-              ))}
+              {DAY_ORDER.map((d) => cell(d, h, "h-4"))}
             </tr>
           ))}
         </tbody>
       </table>
 
       {/* Wider screens: days down, hours across. */}
-      <table className="mt-4 hidden w-full table-fixed border-separate border-spacing-[2px] sm:table">
+      <table {...tableEvents} className="mt-4 hidden w-full table-fixed border-separate border-spacing-[2px] sm:table">
         <thead>
           <tr>
             <th scope="col" className="w-12">
@@ -177,16 +180,14 @@ export function BestTimeHeatmap({ cells, since }: { cells: Cell[]; since: string
               <th scope="row" className="pr-2 text-left text-xs font-medium text-muted">
                 {day(d)}
               </th>
-              {HOURS.map((h) => (
-                <td key={h}>{cellButton(d, h, "h-7")}</td>
-              ))}
+              {HOURS.map((h) => cell(d, h, "h-7"))}
             </tr>
           ))}
         </tbody>
       </table>
 
       {/* Details for the tapped/hovered cell (a tooltip that also works on phones). */}
-      <p className="mt-3 min-h-[2.5rem] text-sm" aria-live="polite">
+      <p className="mt-3 min-h-[2.5rem] text-sm" aria-hidden="true">
         {selDow !== null && selHour !== null ? label(selDow, selHour) : <span className="text-muted">{t("hint")}</span>}
       </p>
 

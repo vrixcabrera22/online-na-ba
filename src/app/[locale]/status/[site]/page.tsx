@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Suspense } from "react";
 import { BestTimeHeatmap } from "@/components/best-time-heatmap";
 import { OutageList } from "@/components/outage-list";
 import { RelativeTime } from "@/components/relative-time";
@@ -91,9 +90,7 @@ export default async function SitePage({ params }: PageProps<"/[locale]/status/[
       </section>
 
       <section>
-        <Suspense>
-          <OutageList outages={outages} locale={locale} />
-        </Suspense>
+        <OutageList outages={outages} locale={locale} />
       </section>
     </div>
   );
