@@ -2,7 +2,7 @@
 
 **Is it online? A free, public status page for Philippine government websites, plus the best times to use them.**
 
-[🇵🇭 Filipino](#) · [🇬🇧 English](#) · **Live site:** _coming soon_
+[🇵🇭 Filipino](https://online-na-ba.vercel.app/fil) · [🇬🇧 English](https://online-na-ba.vercel.app/en) · **Live site:** [online-na-ba.vercel.app](https://online-na-ba.vercel.app)
 
 > ⚠️ **Unofficial.** This project has no affiliation with any government agency. It only checks whether public pages respond. It never logs in, registers, or automates anything on government sites.
 
