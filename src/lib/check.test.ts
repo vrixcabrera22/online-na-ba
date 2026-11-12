@@ -5,6 +5,7 @@ import {
   classify,
   describeError,
   mapWithConcurrency,
+  nodeRequest,
   type HeadersOnlyResponse,
   type RequestFn,
 } from "./check";
@@ -133,7 +134,7 @@ describe("checkUrl (real network)", () => {
     const base = await rawServer((s) =>
       s.end("HTTP/1.1 200 OK\r\nSet-Cookie: a=b;\r\n path=/\r\nContent-Length: 2\r\n\r\nok"),
     );
-    const r = await checkUrl(`${base}/`, { userAgent });
+    const r = await checkUrl(`${base}/`, { userAgent, allowPrivateNetworks: true });
     expect(r).toMatchObject({ status: "up", statusCode: 200, error: null });
   });
 
@@ -143,7 +144,7 @@ describe("checkUrl (real network)", () => {
         ? s.end("HTTP/1.1 302 Found\r\nLocation: /home\r\nContent-Length: 0\r\n\r\n")
         : s.end("HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n"),
     );
-    expect(await checkUrl(`${base}/`, { userAgent })).toMatchObject({ status: "up", statusCode: 200 });
+    expect(await checkUrl(`${base}/`, { userAgent, allowPrivateNetworks: true })).toMatchObject({ status: "up", statusCode: 200 });
   });
 
   it("returns as soon as headers arrive, without downloading the body", async () => {
@@ -153,7 +154,7 @@ describe("checkUrl (real network)", () => {
       const t = setInterval(() => (s.destroyed ? clearInterval(t) : s.write("x")), 50);
     });
     const started = Date.now();
-    const r = await checkUrl(`${base}/`, { userAgent, timeoutMs: 2000 });
+    const r = await checkUrl(`${base}/`, { userAgent, timeoutMs: 2000, allowPrivateNetworks: true });
     expect(r.status).toBe("up");
     expect(Date.now() - started).toBeLessThan(1000);
   });
@@ -164,14 +165,14 @@ describe("checkUrl (real network)", () => {
       seen = raw;
       s.end("HTTP/1.1 204 No Content\r\n\r\n");
     });
-    await checkUrl(`${base}/`, { userAgent });
+    await checkUrl(`${base}/`, { userAgent, allowPrivateNetworks: true });
     expect(seen).toMatch(/^GET \/ HTTP\/1\.1/);
     expect(seen.toLowerCase()).toContain(`user-agent: ${userAgent.toLowerCase()}`);
   });
 
   it("reports timeout when the server never answers", async () => {
     const base = await rawServer(() => {}); // accept, never respond
-    const r = await checkUrl(`${base}/`, { userAgent, timeoutMs: 200 });
+    const r = await checkUrl(`${base}/`, { userAgent, timeoutMs: 200, allowPrivateNetworks: true });
     expect(r).toEqual({ status: "down", statusCode: null, responseTimeMs: null, error: "timeout" });
   });
 
@@ -180,8 +181,36 @@ describe("checkUrl (real network)", () => {
     await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
     const { port } = server.address() as net.AddressInfo;
     await new Promise<void>((resolve) => server.close(() => resolve()));
-    const r = await checkUrl(`http://127.0.0.1:${port}/`, { userAgent });
+    const r = await checkUrl(`http://127.0.0.1:${port}/`, { userAgent, allowPrivateNetworks: true });
     expect(r).toMatchObject({ status: "down", error: "ECONNREFUSED" });
+  });
+});
+
+describe("checkUrl (private network protection)", () => {
+  it("refuses a literal private IP without sending anything", async () => {
+    const request = vi.fn<RequestFn>();
+    const r = await checkUrl("http://169.254.169.254/latest/meta-data/", { userAgent, request });
+    expect(r).toMatchObject({ status: "down", error: "blocked address" });
+    expect(request).not.toHaveBeenCalled();
+  });
+
+  it("refuses a public site that redirects to a private address", async () => {
+    const clock = { t: 0 };
+    const request = fakeRequest([{ statusCode: 302, location: "http://10.0.0.1/admin" }], 10, clock);
+    const r = await checkUrl("https://public.example.com/", { userAgent, request, now: () => clock.t });
+    expect(r).toMatchObject({ status: "down", error: "blocked address" });
+    expect(request).toHaveBeenCalledOnce();
+  });
+
+  it("refuses a hostname that resolves to a private address (real DNS)", async () => {
+    // "localhost" resolves to 127.0.0.1 / ::1; isBlockedHost catches the name,
+    // so call the real request function directly to exercise safeLookup.
+    const err = await nodeRequest("http://localhost:1/", {
+      headers: {},
+      signal: AbortSignal.timeout(2000),
+      blockPrivate: true,
+    }).then(() => null, (e: NodeJS.ErrnoException) => e);
+    expect(err?.code).toBe("EBLOCKED");
   });
 });
 

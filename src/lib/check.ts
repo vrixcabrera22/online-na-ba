@@ -4,6 +4,7 @@
 
 import http from "node:http";
 import https from "node:https";
+import { isBlockedHost, safeLookup } from "./url-safety";
 
 export type CheckStatus = "up" | "slow" | "down";
 
@@ -43,7 +44,7 @@ export interface HeadersOnlyResponse {
 
 export type RequestFn = (
   url: string,
-  init: { headers: Record<string, string>; signal: AbortSignal },
+  init: { headers: Record<string, string>; signal: AbortSignal; blockPrivate: boolean },
 ) => Promise<HeadersOnlyResponse>;
 
 /**
@@ -57,13 +58,21 @@ export type RequestFn = (
  * browser. That's safe here: we only read the status code and Location header,
  * and never use the body.
  */
-export const nodeRequest: RequestFn = (url, { headers, signal }) =>
+export const nodeRequest: RequestFn = (url, { headers, signal, blockPrivate }) =>
   new Promise((resolve, reject) => {
     const target = new URL(url);
     const client = target.protocol === "http:" ? http : https;
     const req = client.request(
       target,
-      { method: "GET", headers, signal, insecureHTTPParser: true },
+      {
+        method: "GET",
+        headers,
+        signal,
+        insecureHTTPParser: true,
+        // Resolve DNS ourselves and refuse private addresses; the socket then
+        // connects to the exact address we approved (see url-safety.ts).
+        ...(blockPrivate ? { lookup: safeLookup } : {}),
+      },
       (res) => {
         resolve({ statusCode: res.statusCode ?? 0, location: res.headers.location ?? null });
         res.destroy();
@@ -78,6 +87,8 @@ export interface CheckOptions {
   timeoutMs?: number;
   request?: RequestFn;
   now?: () => number;
+  /** Only for tests against local servers. Never set in production. */
+  allowPrivateNetworks?: boolean;
 }
 
 export async function checkUrl(url: string, options: CheckOptions): Promise<CheckResult> {
@@ -86,7 +97,9 @@ export async function checkUrl(url: string, options: CheckOptions): Promise<Chec
     timeoutMs = TIMEOUT_MS,
     request = nodeRequest,
     now = () => performance.now(),
+    allowPrivateNetworks = false,
   } = options;
+  const blockPrivate = !allowPrivateNetworks;
 
   const headers = { "User-Agent": userAgent, Accept: "text/html,*/*;q=0.8" };
   // One deadline for the whole check, redirects included.
@@ -96,7 +109,12 @@ export async function checkUrl(url: string, options: CheckOptions): Promise<Chec
   try {
     let current = url;
     for (let hop = 0; ; hop++) {
-      const res = await request(current, { headers, signal });
+      // Literal IPs skip DNS, so check every hop's host here too (a public
+      // site could redirect to http://169.254.169.254/).
+      if (blockPrivate && isBlockedHost(new URL(current).hostname)) {
+        return { status: "down", statusCode: null, responseTimeMs: null, error: "blocked address" };
+      }
+      const res = await request(current, { headers, signal, blockPrivate });
       const isRedirect = res.statusCode >= 300 && res.statusCode < 400 && res.location;
       if (!isRedirect) {
         const responseTimeMs = Math.round(now() - started);
@@ -129,6 +147,7 @@ export function describeError(err: unknown): string {
     // Node network errors carry a code: ENOTFOUND, ECONNREFUSED, ECONNRESET,
     // CERT_HAS_EXPIRED, ...
     const code = (err as Error & { code?: unknown }).code;
+    if (code === "EBLOCKED") return "blocked address";
     if (typeof code === "string") return code;
     return err.message.slice(0, 200);
   }
