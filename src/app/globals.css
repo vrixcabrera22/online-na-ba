@@ -26,6 +26,10 @@
   --unknown-fg: #475569;
   --unknown-bg: #f1f5f9;
 
+  /* Logo (docs/brand): dark green wordmark, green power-button "O". */
+  --logo-ink: #0e2520;
+  --logo-mark: #087f5b;
+
   /* Heatmap: one-hue sequential blue ramp, level 0 (worst) → 4 (best).
      Light mode: light → dark. */
   --heat-0: #cde2fb;
@@ -56,6 +60,10 @@
     --unknown: #6b7280;
     --unknown-fg: #9ca3af;
     --unknown-bg: #1f2937;
+
+    /* Logo on dark: light ink, brighter green so the mark keeps its contrast. */
+    --logo-ink: #e7f5ef;
+    --logo-mark: #34d399;
 
     /* Dark mode flips the anchor: the worst level recedes into the dark
        surface and the best is brightest. */

@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Suspense } from "react";
 import { Link } from "@/i18n/navigation";
 import { HeaderAuth } from "./header-auth";
+import { Logo } from "./logo";
 import { LanguageToggle } from "./language-toggle";
 
 const pill = "rounded-full px-3 py-1.5 text-sm font-medium";
@@ -14,8 +15,9 @@ export function SiteHeader() {
   return (
     <header className="border-b border-border bg-surface">
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-3 px-4 py-3">
-        <Link href="/" className="text-lg font-bold">
-          {t("siteName")}
+        {/* The SVG's aria-label ("Online Na Ba?") names the link for screen readers. */}
+        <Link href="/" className="shrink-0">
+          <Logo className="h-5 w-auto sm:h-6" />
         </Link>
         <div className="flex items-center gap-2">
           {/* No room on phones: there, About lives in the footer. */}

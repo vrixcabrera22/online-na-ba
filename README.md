@@ -1,4 +1,9 @@
-# Online Na Ba?
+<h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/brand/logo-dark.svg">
+    <img src="docs/brand/logo-light.svg" alt="Online Na Ba?" height="44">
+  </picture>
+</h1>
 
 **Is it online? A free, public status page for Philippine government websites, and the best times to use them.**
 
