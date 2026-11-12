@@ -27,6 +27,22 @@ export interface StatusBoardRow {
   uptime_30d: number | null;
 }
 
+/** One row of my_monitors(): a personal monitor with its latest check. */
+export interface MyMonitorRow {
+  id: string;
+  name: string;
+  url: string;
+  is_active: boolean;
+  created_at: string;
+  last_status: CheckStatus | null;
+  last_status_code: number | null;
+  last_response_ms: number | null;
+  last_checked_at: string | null;
+  uptime_24h: number | null;
+  uptime_7d: number | null;
+  uptime_30d: number | null;
+}
+
 /** One point of response_times(). */
 export interface ResponseTimePoint {
   bucket: string;
@@ -198,6 +214,10 @@ export interface Database {
       response_times: {
         Args: { p_monitor_id: string; p_range?: ResponseTimeRange };
         Returns: ResponseTimePoint[];
+      };
+      my_monitors: {
+        Args: { p_id?: string };
+        Returns: MyMonitorRow[];
       };
       record_checks: {
         Args: { p_checks: CheckInput[] };
