@@ -69,3 +69,22 @@ export async function deleteMonitor(formData: FormData): Promise<void> {
   await supabase.from("monitors").delete().eq("id", id);
   refresh();
 }
+
+export async function setAlertsEnabled(formData: FormData): Promise<void> {
+  const monitorId = String(formData.get("id") ?? "");
+  const enabled = formData.get("enabled") === "true";
+  const user = await getCurrentUser();
+  if (!user) return;
+  const supabase = await createSupabaseServerClient();
+  // RLS: only the owner's own alert setting, only for a monitor they own.
+  const { data } = await supabase
+    .from("alert_settings")
+    .update({ enabled })
+    .eq("monitor_id", monitorId)
+    .select("id");
+  if (!data?.length && enabled && user.email) {
+    // No setting yet (shouldn't happen: one is created with each monitor).
+    await supabase.from("alert_settings").insert({ monitor_id: monitorId, email: user.email, enabled: true });
+  }
+  refresh();
+}

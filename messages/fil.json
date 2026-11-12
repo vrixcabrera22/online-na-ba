@@ -136,7 +136,12 @@
       "internal": "Hindi namin masusuri ang mga pribado o lokal na address.",
       "limitReached": "Naabot mo na ang limitasyon ng monitor.",
       "generic": "May nangyaring mali. Subukang muli."
-    }
+    },
+    "alertsOn": "Email alerts: naka-on",
+    "alertsOff": "Email alerts: naka-off",
+    "alertsTo": "Ipapadala sa {email}",
+    "turnOn": "I-on",
+    "turnOff": "I-off"
   },
   "Email": {
     "downSubject": "Hindi ma-access ang {name}",
@@ -159,5 +164,15 @@
       "tls": "problema sa SSL certificate",
       "other": "{error}"
     }
+  },
+  "Unsubscribe": {
+    "title": "Email alerts",
+    "invalid": "Hindi tama o luma na ang link na ito.",
+    "question": "Itigil ang email alerts para sa {name}?",
+    "turnOff": "Oo, itigil ang alerts",
+    "offDone": "Hindi ka na makakatanggap ng alerts para sa {name}.",
+    "turnOnAgain": "I-on ulit",
+    "onDone": "Naka-on na ulit ang alerts para sa {name}.",
+    "home": "Bumalik sa Online Na Ba?"
   }
 }

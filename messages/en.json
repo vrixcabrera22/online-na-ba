@@ -136,7 +136,12 @@
       "internal": "We cannot check private or local network addresses.",
       "limitReached": "You have reached your monitor limit.",
       "generic": "Something went wrong. Please try again."
-    }
+    },
+    "alertsOn": "Email alerts: on",
+    "alertsOff": "Email alerts: off",
+    "alertsTo": "Sent to {email}",
+    "turnOn": "Turn on",
+    "turnOff": "Turn off"
   },
   "Email": {
     "downSubject": "{name} is down",
@@ -159,5 +164,15 @@
       "tls": "SSL certificate problem",
       "other": "{error}"
     }
+  },
+  "Unsubscribe": {
+    "title": "Email alerts",
+    "invalid": "This link is invalid or no longer works.",
+    "question": "Stop email alerts for {name}?",
+    "turnOff": "Yes, stop alerts",
+    "offDone": "You will no longer get alerts for {name}.",
+    "turnOnAgain": "Turn back on",
+    "onDone": "Alerts for {name} are on again.",
+    "home": "Back to Online Na Ba?"
   }
 }

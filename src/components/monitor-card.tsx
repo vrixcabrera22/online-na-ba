@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
-import { deleteMonitor, setMonitorActive } from "@/app/[locale]/dashboard/actions";
+import { deleteMonitor, setAlertsEnabled, setMonitorActive } from "@/app/[locale]/dashboard/actions";
 import { Link } from "@/i18n/navigation";
 import { formatResponseTime, formatUptime } from "@/lib/format";
 import type { MyMonitor } from "@/lib/monitors";
@@ -19,7 +19,7 @@ const ACCENT: Record<MyMonitor["status"], string> = {
 };
 
 /** One personal monitor on the dashboard, with edit / pause / delete. */
-export function MonitorCard({ monitor }: { monitor: MyMonitor }) {
+export function MonitorCard({ monitor, alertEmail }: { monitor: MyMonitor; alertEmail: string }) {
   const t = useTranslations("Dashboard");
   const tSite = useTranslations("Site");
   const locale = useLocale();
@@ -58,6 +58,29 @@ export function MonitorCard({ monitor }: { monitor: MyMonitor }) {
               t("waiting")
             ) : null}
           </p>
+
+          <form
+            action={setAlertsEnabled}
+            className="mt-3 flex items-center justify-between gap-3 rounded-lg bg-background px-3 py-2"
+          >
+            <input type="hidden" name="id" value={monitor.id} />
+            <input type="hidden" name="enabled" value={String(!monitor.alertsEnabled)} />
+            <div className="min-w-0 text-sm">
+              <p className="font-medium">{monitor.alertsEnabled ? t("alertsOn") : t("alertsOff")}</p>
+              {monitor.alertsEnabled && <p className="truncate text-xs text-muted">{t("alertsTo", { email: alertEmail })}</p>}
+            </div>
+            <button
+              type="submit"
+              role="switch"
+              aria-checked={monitor.alertsEnabled}
+              aria-label={monitor.alertsEnabled ? t("turnOff") : t("turnOn")}
+              className={`relative h-6 w-11 shrink-0 rounded-full transition ${monitor.alertsEnabled ? "bg-up" : "bg-unknown"}`}
+            >
+              <span
+                className={`absolute top-0.5 size-5 rounded-full bg-white shadow transition-all ${monitor.alertsEnabled ? "left-[1.375rem]" : "left-0.5"}`}
+              />
+            </button>
+          </form>
 
           {confirming ? (
             <form action={deleteMonitor} className="mt-4 space-y-2 rounded-lg bg-down-bg p-3">

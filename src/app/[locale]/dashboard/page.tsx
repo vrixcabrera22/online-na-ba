@@ -65,7 +65,7 @@ async function Dashboard({ locale }: { locale: string }) {
         ) : (
           <ul className="grid gap-3 md:grid-cols-2">
             {monitors.map((m) => (
-              <MonitorCard key={m.id} monitor={m} />
+              <MonitorCard key={m.id} monitor={m} alertEmail={user.email} />
             ))}
           </ul>
         )}

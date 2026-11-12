@@ -19,29 +19,39 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export interface MyMonitor extends MyMonitorRow {
   status: BadgeStatus;
+  /** Email alerts for this monitor are on (false if no setting exists). */
+  alertsEnabled: boolean;
 }
 
-function toMyMonitor(row: MyMonitorRow): MyMonitor {
+function toMyMonitor(row: MyMonitorRow, alertsEnabled: boolean): MyMonitor {
   return {
     ...row,
     status: row.is_active ? displayStatus(row.last_status, row.last_checked_at, Date.now()) : "paused",
+    alertsEnabled,
   };
 }
 
 export async function getMyMonitors(): Promise<MyMonitor[]> {
   const supabase = await createSupabaseServerClient();
-  const { data, error } = await supabase.rpc("my_monitors", {});
-  if (error) throw new Error(`my_monitors failed: ${error.message}`);
-  return (data ?? []).map(toMyMonitor);
+  const [monitors, alerts] = await Promise.all([
+    supabase.rpc("my_monitors", {}),
+    supabase.from("alert_settings").select("monitor_id, enabled"),
+  ]);
+  if (monitors.error) throw new Error(`my_monitors failed: ${monitors.error.message}`);
+  const enabled = new Map((alerts.data ?? []).map((a) => [a.monitor_id, a.enabled]));
+  return (monitors.data ?? []).map((row) => toMyMonitor(row, enabled.get(row.id) ?? false));
 }
 
 export async function getMyMonitor(id: string): Promise<MyMonitor | null> {
   // Not a UUID → can't exist (and would make Postgres raise an error).
   if (!/^[0-9a-f-]{36}$/i.test(id)) return null;
   const supabase = await createSupabaseServerClient();
-  const { data, error } = await supabase.rpc("my_monitors", { p_id: id });
-  if (error) throw new Error(`my_monitors(id) failed: ${error.message}`);
-  return data?.[0] ? toMyMonitor(data[0]) : null;
+  const [monitor, alert] = await Promise.all([
+    supabase.rpc("my_monitors", { p_id: id }),
+    supabase.from("alert_settings").select("enabled").eq("monitor_id", id).maybeSingle(),
+  ]);
+  if (monitor.error) throw new Error(`my_monitors(id) failed: ${monitor.error.message}`);
+  return monitor.data?.[0] ? toMyMonitor(monitor.data[0], alert.data?.enabled ?? false) : null;
 }
 
 /** The user's plan and how many monitors it allows. */
