@@ -26,7 +26,8 @@
     "up": "Online",
     "slow": "Mabagal",
     "down": "Hindi ma-access",
-    "unknown": "Walang datos"
+    "unknown": "Walang datos",
+    "paused": "Naka-pause"
   },
   "Categories": {
     "benefits": "Benepisyo at kontribusyon",
@@ -98,6 +99,42 @@
       "emailNotConfirmed": "Hindi pa na-confirm ang email mo. Tingnan ang inbox mo.",
       "rateLimited": "Masyadong maraming subok. Maghintay ng ilang minuto.",
       "weakPassword": "Masyadong mahina ang password. Gumamit ng mas mahaba.",
+      "generic": "May nangyaring mali. Subukang muli."
+    }
+  },
+  "Dashboard": {
+    "title": "Mga monitor ko",
+    "signedInAs": "Naka-log in bilang {email}",
+    "usage": "{used} sa {max} na monitor ang nagamit",
+    "emptyTitle": "Wala ka pang monitor",
+    "emptyBody": "Idagdag ang website mo at susuriin namin ito bawat 5 minuto.",
+    "addTitle": "Magdagdag ng monitor",
+    "name": "Pangalan",
+    "namePlaceholder": "Hal. Online shop ko",
+    "url": "URL",
+    "urlPlaceholder": "https://example.com",
+    "add": "Idagdag",
+    "save": "I-save",
+    "cancel": "Kanselahin",
+    "edit": "I-edit",
+    "pause": "I-pause",
+    "resume": "Ituloy",
+    "delete": "Burahin",
+    "confirmDelete": "Burahin ang {name}? Mabubura rin ang lahat ng history nito.",
+    "confirmDeleteYes": "Oo, burahin",
+    "paused": "Naka-pause",
+    "waiting": "Susuriin sa loob ng 5 minuto",
+    "details": "Tingnan ang detalye",
+    "limitReached": "Naabot mo na ang {max} na monitor ng libreng plan. Burahin ang isa para makapagdagdag.",
+    "back": "Bumalik sa dashboard",
+    "notFound": "Hindi makita ang monitor na ito.",
+    "errors": {
+      "nameRequired": "Maglagay ng pangalan (hanggang 100 character).",
+      "invalid": "Hindi tamang URL. Halimbawa: https://example.com",
+      "protocol": "http:// o https:// lang ang puwede.",
+      "credentials": "Huwag isama ang username o password sa URL.",
+      "internal": "Hindi namin masusuri ang mga pribado o lokal na address.",
+      "limitReached": "Naabot mo na ang limitasyon ng monitor.",
       "generic": "May nangyaring mali. Subukang muli."
     }
   }

@@ -4,7 +4,18 @@ import { OUTAGES_TRACKED_SINCE, type Outage } from "@/lib/status";
 import { StatusIcon } from "./status-badge";
 
 /** Recorded outages (incidents), newest first. */
-export async function OutageList({ outages, locale }: { outages: Outage[]; locale: string }) {
+export async function OutageList({
+  outages,
+  locale,
+  since,
+}: {
+  outages: Outage[];
+  locale: string;
+  /** When recording started for this monitor (defaults to when tracking began). */
+  since?: string;
+}) {
+  // Outages exist only from the later of the two dates.
+  const from = since && since > OUTAGES_TRACKED_SINCE ? since : OUTAGES_TRACKED_SINCE;
   const [t, format] = await Promise.all([
     getTranslations({ locale, namespace: "Site" }),
     getFormatter({ locale }),
@@ -27,7 +38,7 @@ export async function OutageList({ outages, locale }: { outages: Outage[]; local
         <p className="mt-4 flex items-center gap-2 rounded-lg bg-up-bg p-4 text-sm text-up-fg">
           <StatusIcon status="up" className="size-4 shrink-0" />
           {t("outagesEmpty", {
-            date: format.dateTime(new Date(OUTAGES_TRACKED_SINCE), { month: "long", day: "numeric", year: "numeric" }),
+            date: format.dateTime(new Date(from), { month: "long", day: "numeric", year: "numeric" }),
           })}
         </p>
       ) : (

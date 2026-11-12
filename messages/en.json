@@ -26,7 +26,8 @@
     "up": "Online",
     "slow": "Slow",
     "down": "Down",
-    "unknown": "No data"
+    "unknown": "No data",
+    "paused": "Paused"
   },
   "Categories": {
     "benefits": "Benefits & contributions",
@@ -98,6 +99,42 @@
       "emailNotConfirmed": "Your email is not confirmed yet. Check your inbox.",
       "rateLimited": "Too many attempts. Wait a few minutes.",
       "weakPassword": "That password is too weak. Use a longer one.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "Dashboard": {
+    "title": "My monitors",
+    "signedInAs": "Signed in as {email}",
+    "usage": "{used} of {max} monitors used",
+    "emptyTitle": "No monitors yet",
+    "emptyBody": "Add your website and we will check it every 5 minutes.",
+    "addTitle": "Add a monitor",
+    "name": "Name",
+    "namePlaceholder": "e.g. My online shop",
+    "url": "URL",
+    "urlPlaceholder": "https://example.com",
+    "add": "Add",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "pause": "Pause",
+    "resume": "Resume",
+    "delete": "Delete",
+    "confirmDelete": "Delete {name}? Its history will be deleted too.",
+    "confirmDeleteYes": "Yes, delete",
+    "paused": "Paused",
+    "waiting": "First check within 5 minutes",
+    "details": "View details",
+    "limitReached": "You have reached the free plan limit of {max} monitors. Delete one to add another.",
+    "back": "Back to dashboard",
+    "notFound": "This monitor could not be found.",
+    "errors": {
+      "nameRequired": "Enter a name (up to 100 characters).",
+      "invalid": "That is not a valid URL. Example: https://example.com",
+      "protocol": "Only http:// and https:// are allowed.",
+      "credentials": "Do not include a username or password in the URL.",
+      "internal": "We cannot check private or local network addresses.",
+      "limitReached": "You have reached your monitor limit.",
       "generic": "Something went wrong. Please try again."
     }
   }

@@ -1,11 +1,15 @@
 import { useTranslations } from "next-intl";
 import type { DisplayStatus } from "@/lib/format";
 
-const STYLES: Record<DisplayStatus, string> = {
+/** A display status, or "paused" for personal monitors that are switched off. */
+export type BadgeStatus = DisplayStatus | "paused";
+
+const STYLES: Record<BadgeStatus, string> = {
   up: "bg-up-bg text-up-fg",
   slow: "bg-slow-bg text-slow-fg",
   down: "bg-down-bg text-down-fg",
   unknown: "bg-unknown-bg text-unknown-fg",
+  paused: "bg-unknown-bg text-unknown-fg",
 };
 
 /** Status pill: icon + translated label (Online / Mabagal / Hindi ma-access). */
@@ -13,7 +17,7 @@ export function StatusBadge({
   status,
   size = "sm",
 }: {
-  status: DisplayStatus;
+  status: BadgeStatus;
   size?: "sm" | "lg";
 }) {
   const t = useTranslations("Status");
@@ -27,7 +31,7 @@ export function StatusBadge({
   );
 }
 
-export function StatusIcon({ status, className }: { status: DisplayStatus; className?: string }) {
+export function StatusIcon({ status, className }: { status: BadgeStatus; className?: string }) {
   const common = {
     className,
     viewBox: "0 0 20 20",
@@ -62,6 +66,16 @@ export function StatusIcon({ status, className }: { status: DisplayStatus; class
           <path
             fillRule="evenodd"
             d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z"
+            clipRule="evenodd"
+          />
+        </svg>
+      );
+    case "paused": // pause in a circle
+      return (
+        <svg {...common}>
+          <path
+            fillRule="evenodd"
+            d="M2 10a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm5-2.25A.75.75 0 0 1 7.75 7h.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1-.75-.75v-4.5Zm4 0a.75.75 0 0 1 .75-.75h.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1-.75-.75v-4.5Z"
             clipRule="evenodd"
           />
         </svg>
