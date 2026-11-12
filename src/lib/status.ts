@@ -24,6 +24,9 @@ function statusCache() {
   cacheLife({ stale: 60, revalidate: 300, expire: 3600 });
 }
 
+/** First scheduled run with incident tracking; no outages exist before this. */
+export const OUTAGES_TRACKED_SINCE = "2026-11-12T02:40:00Z";
+
 /** Display order of categories on the board. */
 export const CATEGORY_ORDER: readonly MonitorCategory[] = ["benefits", "ids", "tax", "others"];
 

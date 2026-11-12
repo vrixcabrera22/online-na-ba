@@ -34,5 +34,32 @@
     "ids": "ID at mga dokumento",
     "tax": "Buwis at lisensya",
     "others": "Iba pa"
+  },
+  "Site": {
+    "metaTitle": "{name}: online ba ngayon?",
+    "metaDescription": "Live na status ng {name}: kung online ito ngayon, bilis ng sagot, at mga naitalang outage.",
+    "back": "Lahat ng website",
+    "visit": "Bisitahin ang {name}",
+    "lastChecked": "Huling sinuri",
+    "responseNow": "Bilis ng sagot ngayon",
+    "uptime24h": "Uptime (24 oras)",
+    "uptime7d": "Uptime (7 araw)",
+    "uptime30d": "Uptime (30 araw)",
+    "chartTitle": "Bilis ng sagot",
+    "range24h": "24 oras",
+    "range7d": "7 araw",
+    "rangeLabel": "Saklaw ng chart",
+    "chartEmpty": "Wala pang sapat na datos para sa chart.",
+    "downPoint": "Hindi ma-access",
+    "outagesTitle": "Mga outage",
+    "outagesNote": "Itinuturing na outage kapag 2 sunod-sunod na pagsusuri ang hindi ma-access.",
+    "outagesEmpty": "Walang naitalang outage mula {date}.",
+    "ongoing": "Nagpapatuloy pa",
+    "started": "Nagsimula",
+    "ended": "Natapos",
+    "lasted": "Tagal",
+    "duration": "{hours, plural, =0 {} other {# oras }}{minutes, plural, =0 {} other {# minuto}}",
+    "chartAverage": "Karaniwang bilis ng sagot: {avg}.",
+    "chartDown": "Hindi ma-access sa {down} sa {total} na pagsusuri."
   }
 }

@@ -34,5 +34,32 @@
     "ids": "IDs & documents",
     "tax": "Tax & licensing",
     "others": "Others"
+  },
+  "Site": {
+    "metaTitle": "Is {name} down? Live status",
+    "metaDescription": "Live status of {name}: whether it is up right now, response times and recorded outages.",
+    "back": "All sites",
+    "visit": "Visit {name}",
+    "lastChecked": "Last checked",
+    "responseNow": "Response time now",
+    "uptime24h": "Uptime (24 h)",
+    "uptime7d": "Uptime (7 days)",
+    "uptime30d": "Uptime (30 days)",
+    "chartTitle": "Response time",
+    "range24h": "24 h",
+    "range7d": "7 days",
+    "rangeLabel": "Chart range",
+    "chartEmpty": "Not enough data for a chart yet.",
+    "downPoint": "Down",
+    "outagesTitle": "Outages",
+    "outagesNote": "An outage starts after 2 down checks in a row.",
+    "outagesEmpty": "No outages recorded since {date}.",
+    "ongoing": "Ongoing",
+    "started": "Started",
+    "ended": "Ended",
+    "lasted": "Lasted",
+    "duration": "{hours, plural, =0 {} one {# hr } other {# hrs }}{minutes, plural, =0 {} other {# min}}",
+    "chartAverage": "Average response time: {avg}.",
+    "chartDown": "Down in {down} of {total} checks."
   }
 }
