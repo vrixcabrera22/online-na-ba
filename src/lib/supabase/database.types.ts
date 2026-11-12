@@ -51,6 +51,24 @@ export interface ResponseTimePoint {
   down: number;
 }
 
+export type AlertKind = "down" | "up";
+
+/** One row of pending_alerts(): an email that should be sent now. */
+export interface PendingAlert {
+  kind: AlertKind;
+  incident_id: number;
+  monitor_id: string;
+  monitor_name: string;
+  monitor_url: string;
+  started_at: string;
+  ended_at: string | null;
+  duration_seconds: number | null;
+  last_error: string | null;
+  alert_setting_id: string;
+  recipient: string;
+  locale: Locale;
+}
+
 /** Input row for record_checks(). */
 export interface CheckInput {
   monitor_id: string;
@@ -176,6 +194,8 @@ export interface Database {
           started_at: string;
           ended_at: string | null;
           duration_seconds: number | null;
+          down_alert_sent_at: string | null;
+          up_alert_sent_at: string | null;
         };
         Insert: {
           monitor_id: string;
@@ -218,6 +238,14 @@ export interface Database {
       my_monitors: {
         Args: { p_id?: string };
         Returns: MyMonitorRow[];
+      };
+      pending_alerts: {
+        Args: Record<string, never>;
+        Returns: PendingAlert[];
+      };
+      mark_alerts_sent: {
+        Args: { p_sent: { incident_id: number; kind: AlertKind }[] };
+        Returns: number;
       };
       record_checks: {
         Args: { p_checks: CheckInput[] };
