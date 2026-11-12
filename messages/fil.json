@@ -70,5 +70,35 @@
     "title": "May nangyaring mali",
     "body": "Hindi namin ma-load ang datos ngayon. Subukang muli maya-maya.",
     "retry": "Subukang muli"
+  },
+  "Auth": {
+    "loginTitle": "Mag-log in",
+    "signupTitle": "Gumawa ng account",
+    "signupIntro": "Bantayan ang hanggang 3 sa sarili mong website at makatanggap ng email kapag hindi ma-access ang mga ito.",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "Hindi bababa sa 8 character",
+    "loginButton": "Mag-log in",
+    "signupButton": "Mag-sign up",
+    "pending": "Sandali lang…",
+    "noAccount": "Wala pang account?",
+    "haveAccount": "May account na?",
+    "signupLink": "Mag-sign up",
+    "loginLink": "Mag-log in",
+    "checkEmailTitle": "Tingnan ang iyong email",
+    "checkEmail": "Kung bago ang {email}, nagpadala kami ng link doon. I-click ito para ma-confirm ang account mo, saka mag-log in.",
+    "confirmed": "Na-confirm na ang email mo. Mag-log in na.",
+    "confirmFailed": "Hindi gumana ang link. Kung na-click mo na ito dati, subukang mag-log in.",
+    "logout": "Mag-log out",
+    "dashboard": "Dashboard",
+    "errors": {
+      "invalidEmail": "Maglagay ng tamang email address.",
+      "passwordTooShort": "Dapat hindi bababa sa 8 character ang password.",
+      "invalidCredentials": "Mali ang email o password.",
+      "emailNotConfirmed": "Hindi pa na-confirm ang email mo. Tingnan ang inbox mo.",
+      "rateLimited": "Masyadong maraming subok. Maghintay ng ilang minuto.",
+      "weakPassword": "Masyadong mahina ang password. Gumamit ng mas mahaba.",
+      "generic": "May nangyaring mali. Subukang muli."
+    }
   }
 }

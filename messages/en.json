@@ -70,5 +70,35 @@
     "title": "Something went wrong",
     "body": "We could not load the data right now. Please try again shortly.",
     "retry": "Try again"
+  },
+  "Auth": {
+    "loginTitle": "Log in",
+    "signupTitle": "Create an account",
+    "signupIntro": "Monitor up to 3 of your own websites and get an email when they go down.",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "At least 8 characters",
+    "loginButton": "Log in",
+    "signupButton": "Sign up",
+    "pending": "One moment…",
+    "noAccount": "No account yet?",
+    "haveAccount": "Already have an account?",
+    "signupLink": "Sign up",
+    "loginLink": "Log in",
+    "checkEmailTitle": "Check your email",
+    "checkEmail": "If {email} is new here, we sent it a link. Click it to confirm your account, then log in.",
+    "confirmed": "Your email is confirmed. You can log in now.",
+    "confirmFailed": "That link did not work. If you already clicked it before, try logging in.",
+    "logout": "Log out",
+    "dashboard": "Dashboard",
+    "errors": {
+      "invalidEmail": "Enter a valid email address.",
+      "passwordTooShort": "Password must be at least 8 characters.",
+      "invalidCredentials": "Wrong email or password.",
+      "emailNotConfirmed": "Your email is not confirmed yet. Check your inbox.",
+      "rateLimited": "Too many attempts. Wait a few minutes.",
+      "weakPassword": "That password is too weak. Use a longer one.",
+      "generic": "Something went wrong. Please try again."
+    }
   }
 }
