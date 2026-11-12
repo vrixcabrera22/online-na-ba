@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { useActionState } from "react";
-import { signIn, signUp, type AuthFormState } from "@/app/[locale]/(auth)/actions";
+import { signIn, signInDemo, signUp, type AuthFormState } from "@/app/[locale]/(auth)/actions";
 import { Link } from "@/i18n/navigation";
 import { MIN_PASSWORD_LENGTH } from "@/lib/auth-helpers";
 
@@ -28,6 +28,7 @@ export function AuthForm({ mode, notice }: { mode: "login" | "signup"; notice?: 
   const errorId = "auth-error";
 
   return (
+    <div className="space-y-4">
     <form action={action} className="space-y-4 rounded-xl border border-border bg-surface p-6" noValidate>
       <input type="hidden" name="locale" value={locale} />
 
@@ -95,5 +96,19 @@ export function AuthForm({ mode, notice }: { mode: "login" | "signup"; notice?: 
         </Link>
       </p>
     </form>
+
+    {mode === "login" && (
+      <form action={signInDemo} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-dashed border-border p-4">
+        <input type="hidden" name="locale" value={locale} />
+        <div className="min-w-0 text-sm">
+          <p className="font-semibold">{t("demoTitle")}</p>
+          <p className="text-muted">{t("demoBody")}</p>
+        </div>
+        <button type="submit" className="rounded-lg border border-border bg-surface px-4 py-2 text-sm font-semibold hover:bg-unknown-bg">
+          {t("demoButton")}
+        </button>
+      </form>
+    )}
+    </div>
   );
 }

@@ -260,6 +260,16 @@ export interface Database {
         Args: { p_monitor_id: string; p_days?: number };
         Returns: BestTimeRow[];
       };
+      health_report: {
+        Args: Record<string, never>;
+        Returns: {
+          job_active: boolean;
+          last_check_at: string | null;
+          runs_24h: number;
+          max_gap_minutes: number;
+          gaps_over_15m: number;
+        }[];
+      };
       record_checks: {
         Args: { p_checks: CheckInput[] };
         Returns: IncidentEvent[];

@@ -100,7 +100,10 @@
       "rateLimited": "Too many attempts. Wait a few minutes.",
       "weakPassword": "That password is too weak. Use a longer one.",
       "generic": "Something went wrong. Please try again."
-    }
+    },
+    "demoTitle": "Want to try it first?",
+    "demoBody": "Log in to a demo account with sample monitors. It resets every day.",
+    "demoButton": "Try the demo"
   },
   "Dashboard": {
     "title": "My monitors",
@@ -141,7 +144,9 @@
     "alertsOff": "Email alerts: off",
     "alertsTo": "Sent to {email}",
     "turnOn": "Turn on",
-    "turnOff": "Turn off"
+    "turnOff": "Turn off",
+    "demoNote": "This is the demo account. Change anything you like; it resets every day.",
+    "alertsBeta": "Beta: alert emails may not arrive yet while we finish setting up email delivery."
   },
   "Email": {
     "downSubject": "{name} is down",
@@ -238,6 +243,8 @@
     "disclaimer": "Online Na Ba? is an independent project. It is not owned, endorsed or operated by any Philippine government agency. Status comes from automated checks of public pages and may not match what you see. Always use official channels for transactions.",
     "sourceTitle": "Open source",
     "source": "The source code is open on GitHub.",
-    "sourceLink": "View on GitHub"
+    "sourceLink": "View on GitHub",
+    "faq5q": "Is there a demo?",
+    "faq5a": "Yes. Press \"Try the demo\" on the login page, or log in with {email} and the password {password}. It resets every day."
   }
 }

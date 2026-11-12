@@ -29,8 +29,10 @@ export function MonitorCard({ monitor, alertEmail }: { monitor: MyMonitor; alert
 
   const button = "rounded-lg border border-border px-3 py-1.5 text-sm font-medium hover:bg-unknown-bg";
 
+  // min-w-0: a grid item otherwise refuses to shrink below its longest
+  // unbreakable text (a long URL), which made the page wider than a phone.
   return (
-    <li className={`rounded-xl border border-border border-l-4 ${ACCENT[monitor.status]} bg-surface p-4 shadow-sm`}>
+    <li className={`min-w-0 rounded-xl border border-border border-l-4 ${ACCENT[monitor.status]} bg-surface p-4 shadow-sm`}>
       {editing ? (
         <MonitorForm monitor={monitor} onDone={closeEdit} />
       ) : (

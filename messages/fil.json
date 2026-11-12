@@ -100,7 +100,10 @@
       "rateLimited": "Masyadong maraming subok. Maghintay ng ilang minuto.",
       "weakPassword": "Masyadong mahina ang password. Gumamit ng mas mahaba.",
       "generic": "May nangyaring mali. Subukang muli."
-    }
+    },
+    "demoTitle": "Gusto mo munang subukan?",
+    "demoBody": "Mag-log in sa demo account na may mga halimbawang monitor. Nire-reset ito araw-araw.",
+    "demoButton": "Subukan ang demo"
   },
   "Dashboard": {
     "title": "Mga monitor ko",
@@ -141,7 +144,9 @@
     "alertsOff": "Email alerts: naka-off",
     "alertsTo": "Ipapadala sa {email}",
     "turnOn": "I-on",
-    "turnOff": "I-off"
+    "turnOff": "I-off",
+    "demoNote": "Demo account ito. Puwede mong baguhin ang lahat; ibabalik ito sa dati araw-araw.",
+    "alertsBeta": "Beta: maaaring hindi pa dumating ang mga email alert habang inaayos pa namin ang pagpapadala ng email."
   },
   "Email": {
     "downSubject": "Hindi ma-access ang {name}",
@@ -238,6 +243,8 @@
     "disclaimer": "Ang Online Na Ba? ay isang independiyenteng proyekto. Hindi ito pag-aari, inendorso, o pinapatakbo ng anumang ahensya ng gobyerno ng Pilipinas. Galing ang status sa mga automated na pagsusuri ng mga pampublikong pahina at maaaring hindi tugma sa nararanasan mo. Laging gamitin ang mga opisyal na channel para sa mga transaksyon.",
     "sourceTitle": "Open source",
     "source": "Bukas ang source code sa GitHub.",
-    "sourceLink": "Tingnan sa GitHub"
+    "sourceLink": "Tingnan sa GitHub",
+    "faq5q": "May demo ba?",
+    "faq5a": "Oo. Pindutin ang \"Subukan ang demo\" sa login page, o mag-log in gamit ang {email} at password na {password}. Nire-reset ito araw-araw."
   }
 }

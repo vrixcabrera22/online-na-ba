@@ -5,6 +5,7 @@ import { signOut } from "@/app/[locale]/(auth)/actions";
 import { MonitorCard } from "@/components/monitor-card";
 import { MonitorForm } from "@/components/monitor-form";
 import { requireUser } from "@/lib/auth";
+import { DEMO_EMAIL } from "@/lib/demo";
 import { getMyLimit, getMyMonitors } from "@/lib/monitors";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/dashboard">): Promise<Metadata> {
@@ -48,6 +49,11 @@ async function Dashboard({ locale }: { locale: string }) {
           </button>
         </form>
       </header>
+
+      <div className="space-y-2 text-sm">
+        {user.email === DEMO_EMAIL && <p className="rounded-lg bg-accent/10 px-3 py-2">{t("demoNote")}</p>}
+        <p className="rounded-lg bg-slow-bg px-3 py-2 text-slow-fg">{t("alertsBeta")}</p>
+      </div>
 
       <section aria-labelledby="my-monitors" className="space-y-3">
         <div className="flex items-baseline justify-between gap-3">

@@ -4,6 +4,7 @@ import { hasLocale } from "next-intl";
 import { redirect } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { authErrorKey, validateCredentials, type AuthErrorKey } from "@/lib/auth-helpers";
+import { DEMO_EMAIL, DEMO_PASSWORD } from "@/lib/demo";
 import { siteUrl } from "@/lib/env";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -62,4 +63,12 @@ export async function signOut(formData: FormData): Promise<void> {
   const supabase = await createSupabaseServerClient();
   await supabase.auth.signOut();
   redirect({ href: "/", locale });
+}
+
+/** One-click login to the public demo account (credentials are public). */
+export async function signInDemo(formData: FormData): Promise<void> {
+  const { locale } = readForm(formData);
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.auth.signInWithPassword({ email: DEMO_EMAIL, password: DEMO_PASSWORD });
+  redirect({ href: error ? "/login" : "/dashboard", locale });
 }

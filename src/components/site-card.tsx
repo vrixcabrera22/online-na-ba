@@ -18,7 +18,7 @@ export function SiteCard({ site }: { site: Site }) {
   const locale = useLocale();
 
   return (
-    <li>
+    <li className="min-w-0">
       <Link
         href={`/status/${site.slug}`}
         className={`block h-full rounded-xl border border-border border-l-4 ${ACCENT[site.status]} bg-surface p-4 shadow-sm transition hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}

@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { StatusBadge } from "@/components/status-badge";
 import { localeAlternates } from "@/i18n/alternates";
 import { checkerUserAgent } from "@/lib/env";
+import { DEMO_EMAIL, DEMO_PASSWORD } from "@/lib/demo";
 import { REPO_URL } from "@/lib/site";
 
 
@@ -96,10 +97,10 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
       <section className="space-y-3">
         <h2 className={h2}>{t("faqTitle")}</h2>
         <dl className="space-y-4">
-          {([1, 2, 3, 4] as const).map((n) => (
+          {([1, 2, 3, 4, 5] as const).map((n) => (
             <div key={n}>
               <dt className="font-semibold">{t(`faq${n}q`)}</dt>
-              <dd className={`mt-1 ${p}`}>{t(`faq${n}a`)}</dd>
+              <dd className={`mt-1 ${p}`}>{n === 5 ? t("faq5a", { email: DEMO_EMAIL, password: DEMO_PASSWORD }) : t(`faq${n}a`)}</dd>
             </div>
           ))}
         </dl>
