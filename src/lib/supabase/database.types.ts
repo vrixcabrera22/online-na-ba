@@ -43,6 +43,15 @@ export interface MyMonitorRow {
   uptime_30d: number | null;
 }
 
+/** One cell of best_times(): a day-of-week × hour in Manila time. */
+export interface BestTimeRow {
+  dow: number;
+  hour: number;
+  checks: number;
+  uptime: number | null;
+  avg_response_ms: number | null;
+}
+
 /** One point of response_times(). */
 export interface ResponseTimePoint {
   bucket: string;
@@ -246,6 +255,10 @@ export interface Database {
       mark_alerts_sent: {
         Args: { p_sent: { incident_id: number; kind: AlertKind }[] };
         Returns: number;
+      };
+      best_times: {
+        Args: { p_monitor_id: string; p_days?: number };
+        Returns: BestTimeRow[];
       };
       record_checks: {
         Args: { p_checks: CheckInput[] };

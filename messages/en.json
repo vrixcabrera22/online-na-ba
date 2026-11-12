@@ -174,5 +174,29 @@
     "turnOnAgain": "Turn back on",
     "onDone": "Alerts for {name} are on again.",
     "home": "Back to Online Na Ba?"
+  },
+  "Heatmap": {
+    "title": "Best time to try",
+    "subtitle": "By day and hour in Philippine time, from the last 30 days.",
+    "metricLabel": "Show",
+    "metricSpeed": "Response time",
+    "metricUptime": "Uptime",
+    "legendSpeedLow": "Slower",
+    "legendSpeedHigh": "Faster",
+    "legendUptimeLow": "Down more often",
+    "legendUptimeHigh": "Always online",
+    "noData": "Not enough data yet",
+    "since": "Based on data since {date}. It gets more accurate as data builds up.",
+    "fastest": "Fastest: {when}.",
+    "slowest": "Slowest: {when}.",
+    "alwaysOnline": "Online almost every hour we have checked.",
+    "leastReliable": "Most often down: {when}.",
+    "notEnough": "Not enough data for the heatmap yet. Check back in a few days.",
+    "window": "{day}, {from}–{to}",
+    "cell": "{day}, {hour}: uptime {uptime}, response {speed}, {checks} checks",
+    "cellNoData": "{day}, {hour}: not enough data yet",
+    "hint": "Tap or hover over a box for details.",
+    "hourColumn": "Hour",
+    "dayColumn": "Day"
   }
 }

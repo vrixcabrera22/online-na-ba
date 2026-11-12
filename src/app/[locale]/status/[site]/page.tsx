@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
+import { BestTimeHeatmap } from "@/components/best-time-heatmap";
 import { OutageList } from "@/components/outage-list";
 import { RelativeTime } from "@/components/relative-time";
 import { ResponseTimeChart } from "@/components/response-time-chart";
@@ -9,7 +10,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { localeAlternates } from "@/i18n/alternates";
 import { Link } from "@/i18n/navigation";
 import { formatResponseTime, formatUptime } from "@/lib/format";
-import { getRecentOutages, getResponseTimes, getSite, getStatusBoard } from "@/lib/status";
+import { DATA_SINCE, getBestTimes, getRecentOutages, getResponseTimes, getSite, getStatusBoard } from "@/lib/status";
 
 // Prerender every known site in both languages. Sites added later still work:
 // they render on first visit and are cached after that.
@@ -38,11 +39,12 @@ export default async function SitePage({ params }: PageProps<"/[locale]/status/[
   const site = await getSite(slug);
   if (!site) notFound();
 
-  const [t, day, week, outages] = await Promise.all([
+  const [t, day, week, outages, bestTimes] = await Promise.all([
     getTranslations({ locale, namespace: "Site" }),
     getResponseTimes(site.id, "24h"),
     getResponseTimes(site.id, "7d"),
     getRecentOutages(site.id),
+    getBestTimes(site.id),
   ]);
 
   return (
@@ -82,6 +84,10 @@ export default async function SitePage({ params }: PageProps<"/[locale]/status/[
 
       <section className="rounded-xl border border-border bg-surface p-4 sm:p-6">
         <ResponseTimeChart data={{ "24h": day, "7d": week }} />
+      </section>
+
+      <section className="rounded-xl border border-border bg-surface p-4 sm:p-6">
+        <BestTimeHeatmap cells={bestTimes} since={DATA_SINCE} />
       </section>
 
       <section>

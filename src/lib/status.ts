@@ -1,6 +1,7 @@
 import "server-only";
 import { cacheLife, cacheTag } from "next/cache";
 import { displayStatus, type DisplayStatus } from "@/lib/format";
+import { toCells, type Cell } from "@/lib/heatmap";
 import { createPublicClient } from "@/lib/supabase/public";
 import type {
   MonitorCategory,
@@ -23,6 +24,9 @@ function statusCache() {
   // Checks run every 5 minutes.
   cacheLife({ stale: 60, revalidate: 300, expire: 3600 });
 }
+
+/** First check ever recorded (start of all public data). */
+export const DATA_SINCE = "2026-11-12T01:36:00Z";
 
 /** First scheduled run with incident tracking; no outages exist before this. */
 export const OUTAGES_TRACKED_SINCE = "2026-11-12T02:40:00Z";
@@ -77,6 +81,14 @@ export async function getResponseTimes(
   });
   if (error) throw new Error(`response_times failed: ${error.message}`);
   return data ?? [];
+}
+
+export async function getBestTimes(monitorId: string): Promise<Cell[]> {
+  "use cache";
+  statusCache();
+  const { data, error } = await createPublicClient().rpc("best_times", { p_monitor_id: monitorId });
+  if (error) throw new Error(`best_times failed: ${error.message}`);
+  return toCells(data ?? []);
 }
 
 export async function getRecentOutages(monitorId: string, limit = 20): Promise<Outage[]> {

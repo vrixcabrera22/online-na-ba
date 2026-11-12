@@ -1,5 +1,6 @@
 import "server-only";
 import { displayStatus } from "@/lib/format";
+import { toCells, type Cell } from "@/lib/heatmap";
 import { MONITOR_LIMITS } from "@/lib/monitor-input";
 import type { BadgeStatus } from "@/components/status-badge";
 import type { Outage } from "@/lib/status";
@@ -86,4 +87,12 @@ export async function getMyOutages(id: string, limit = 20): Promise<Outage[]> {
     endedAt: r.ended_at,
     durationSeconds: r.duration_seconds,
   }));
+}
+
+/** Heatmap cells for one of the user's monitors (RLS: own monitors only). */
+export async function getMyBestTimes(id: string): Promise<Cell[]> {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.rpc("best_times", { p_monitor_id: id });
+  if (error) throw new Error(`best_times failed: ${error.message}`);
+  return toCells(data ?? []);
 }

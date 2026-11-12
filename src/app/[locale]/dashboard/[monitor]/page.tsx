@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
+import { BestTimeHeatmap } from "@/components/best-time-heatmap";
 import { OutageList } from "@/components/outage-list";
 import { RelativeTime } from "@/components/relative-time";
 import { ResponseTimeChart } from "@/components/response-time-chart";
@@ -9,7 +10,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { Link } from "@/i18n/navigation";
 import { requireUser } from "@/lib/auth";
 import { formatResponseTime, formatUptime } from "@/lib/format";
-import { getMyMonitor, getMyOutages, getMyResponseTimes } from "@/lib/monitors";
+import { getMyBestTimes, getMyMonitor, getMyOutages, getMyResponseTimes } from "@/lib/monitors";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/dashboard/[monitor]">): Promise<Metadata> {
   const { locale } = await params;
@@ -36,12 +37,13 @@ async function MonitorDetail({ params }: { params: PageProps<"/[locale]/dashboar
   const monitor = await getMyMonitor(id);
   if (!monitor) notFound();
 
-  const [t, tSite, day, week, outages] = await Promise.all([
+  const [t, tSite, day, week, outages, bestTimes] = await Promise.all([
     getTranslations({ locale, namespace: "Dashboard" }),
     getTranslations({ locale, namespace: "Site" }),
     getMyResponseTimes(monitor.id, "24h"),
     getMyResponseTimes(monitor.id, "7d"),
     getMyOutages(monitor.id),
+    getMyBestTimes(monitor.id),
   ]);
 
   return (
@@ -78,6 +80,10 @@ async function MonitorDetail({ params }: { params: PageProps<"/[locale]/dashboar
 
       <section className="rounded-xl border border-border bg-surface p-4 sm:p-6">
         <ResponseTimeChart data={{ "24h": day, "7d": week }} />
+      </section>
+
+      <section className="rounded-xl border border-border bg-surface p-4 sm:p-6">
+        <BestTimeHeatmap cells={bestTimes} since={monitor.created_at} />
       </section>
 
       <section>

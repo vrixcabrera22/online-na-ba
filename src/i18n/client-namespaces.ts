@@ -3,4 +3,4 @@
  * sent to the browser; everything else renders on the server.
  * client-namespaces.test.ts fails if a client component uses one not listed.
  */
-export const CLIENT_NAMESPACES = ["Header", "Site", "Error", "Auth", "Dashboard", "Status"] as const;
+export const CLIENT_NAMESPACES = ["Header", "Site", "Error", "Auth", "Dashboard", "Status", "Heatmap"] as const;

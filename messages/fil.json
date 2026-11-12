@@ -174,5 +174,29 @@
     "turnOnAgain": "I-on ulit",
     "onDone": "Naka-on na ulit ang alerts para sa {name}.",
     "home": "Bumalik sa Online Na Ba?"
+  },
+  "Heatmap": {
+    "title": "Pinakamainam na oras para subukan",
+    "subtitle": "Ayon sa araw at oras sa Pilipinas, mula sa huling 30 araw.",
+    "metricLabel": "Ipakita",
+    "metricSpeed": "Bilis ng sagot",
+    "metricUptime": "Uptime",
+    "legendSpeedLow": "Mas mabagal",
+    "legendSpeedHigh": "Mas mabilis",
+    "legendUptimeLow": "Mas madalas down",
+    "legendUptimeHigh": "Laging online",
+    "noData": "Kulang pa ang datos",
+    "since": "Batay sa datos mula {date}. Lalong gumaganda habang dumarami ang datos.",
+    "fastest": "Pinakamabilis: {when}.",
+    "slowest": "Pinakamabagal: {when}.",
+    "alwaysOnline": "Online sa halos lahat ng oras na nasuri namin.",
+    "leastReliable": "Pinakamadalas hindi ma-access: {when}.",
+    "notEnough": "Kulang pa ang datos para sa heatmap. Bumalik pagkalipas ng ilang araw.",
+    "window": "{day}, {from}–{to}",
+    "cell": "{day}, {hour}: uptime {uptime}, bilis {speed}, {checks} pagsusuri",
+    "cellNoData": "{day}, {hour}: kulang pa ang datos",
+    "hint": "Pindutin o i-hover ang isang kahon para sa detalye.",
+    "hourColumn": "Oras",
+    "dayColumn": "Araw"
   }
 }

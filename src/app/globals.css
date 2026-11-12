@@ -25,6 +25,14 @@
   --unknown: #64748b;
   --unknown-fg: #475569;
   --unknown-bg: #f1f5f9;
+
+  /* Heatmap: one-hue sequential blue ramp, level 0 (worst) → 4 (best).
+     Light mode: light → dark. */
+  --heat-0: #cde2fb;
+  --heat-1: #86b6ef;
+  --heat-2: #3987e5;
+  --heat-3: #1c5cab;
+  --heat-4: #0d366b;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -48,6 +56,14 @@
     --unknown: #6b7280;
     --unknown-fg: #9ca3af;
     --unknown-bg: #1f2937;
+
+    /* Dark mode flips the anchor: the worst level recedes into the dark
+       surface and the best is brightest. */
+    --heat-0: #104281;
+    --heat-1: #1c5cab;
+    --heat-2: #3987e5;
+    --heat-3: #86b6ef;
+    --heat-4: #cde2fb;
   }
 }
 
