@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { checkUrl, mapWithConcurrency } from "@/lib/check";
 import { isAuthorizedCronRequest } from "@/lib/cron-auth";
 import { checkerUserAgent } from "@/lib/env";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient, supabaseUrl } from "@/lib/supabase/admin";
 
 // All checks run in parallel with a 15 s timeout each, so a run takes ~15 s at
 // worst. 60 s leaves headroom for the database writes.
@@ -35,7 +35,9 @@ export async function POST(request: Request) {
     // Only the scheduler (holding CRON_SECRET) can reach this point, so it is
     // safe to include the database error to make failures debuggable.
     return NextResponse.json(
-      { error: "failed to load monitors", detail: loadError.message },
+      // The project URL is public (it's in every browser request), so showing
+      // it here is fine and helps spot a misconfigured environment variable.
+      { error: "failed to load monitors", detail: loadError.message, supabaseUrl: supabaseUrl() },
       { status: 500 },
     );
   }
