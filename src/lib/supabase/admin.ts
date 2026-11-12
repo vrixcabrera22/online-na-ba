@@ -6,7 +6,14 @@ import { normalizeSupabaseUrl } from "./url";
 
 /** The Supabase project URL, cleaned up (see normalizeSupabaseUrl). */
 export function supabaseUrl(): string {
-  return normalizeSupabaseUrl(requireEnv("NEXT_PUBLIC_SUPABASE_URL"));
+  // Written out literally (not process.env[name]) so Next.js inlines the value
+  // at build time. Public "Config" variables on Vercel are available during the
+  // build but not necessarily to functions at runtime.
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!url) {
+    throw new Error("Missing environment variable NEXT_PUBLIC_SUPABASE_URL. See .env.example.");
+  }
+  return normalizeSupabaseUrl(url);
 }
 
 /**
