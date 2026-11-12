@@ -15,5 +15,17 @@
   },
   "Footer": {
     "disclaimer": "Hindi opisyal. Walang kaugnayan ang Online Na Ba? sa anumang ahensya ng gobyerno. Sinusuri lang namin kung sumasagot ang mga pampublikong pahina."
+  },
+  "Status": {
+    "up": "Online",
+    "slow": "Mabagal",
+    "down": "Hindi ma-access",
+    "unknown": "Walang datos"
+  },
+  "Categories": {
+    "benefits": "Benepisyo at kontribusyon",
+    "ids": "ID at mga dokumento",
+    "tax": "Buwis at lisensya",
+    "others": "Iba pa"
   }
 }

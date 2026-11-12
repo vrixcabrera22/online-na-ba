@@ -1,22 +1,79 @@
 @import "tailwindcss";
 
+/*
+ * Design tokens. Status colors are always paired with an icon and a text
+ * label, never used alone. "fg" variants are for text on the page background
+ * and meet WCAG AA contrast in both themes.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --foreground: #0f172a;
+  --muted: #475569;
+  --border: #e2e8f0;
+  --accent: #1d4ed8;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --up: #16a34a;
+  --up-fg: #15803d;
+  --up-bg: #dcfce7;
+  --slow: #d97706;
+  --slow-fg: #b45309;
+  --slow-bg: #fef3c7;
+  --down: #dc2626;
+  --down-fg: #b91c1c;
+  --down-bg: #fee2e2;
+  --unknown: #64748b;
+  --unknown-fg: #475569;
+  --unknown-bg: #f1f5f9;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0b1120;
+    --surface: #111827;
+    --foreground: #e5e7eb;
+    --muted: #9ca3af;
+    --border: #1f2937;
+    --accent: #60a5fa;
+
+    --up: #22c55e;
+    --up-fg: #4ade80;
+    --up-bg: #052e16;
+    --slow: #f59e0b;
+    --slow-fg: #fbbf24;
+    --slow-bg: #422006;
+    --down: #ef4444;
+    --down-fg: #f87171;
+    --down-bg: #450a0a;
+    --unknown: #6b7280;
+    --unknown-fg: #9ca3af;
+    --unknown-bg: #1f2937;
   }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+
+  --color-up: var(--up);
+  --color-up-fg: var(--up-fg);
+  --color-up-bg: var(--up-bg);
+  --color-slow: var(--slow);
+  --color-slow-fg: var(--slow-fg);
+  --color-slow-bg: var(--slow-bg);
+  --color-down: var(--down);
+  --color-down-fg: var(--down-fg);
+  --color-down-bg: var(--down-bg);
+  --color-unknown: var(--unknown);
+  --color-unknown-fg: var(--unknown-fg);
+  --color-unknown-bg: var(--unknown-bg);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
 body {

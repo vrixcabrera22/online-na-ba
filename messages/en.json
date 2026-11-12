@@ -15,5 +15,17 @@
   },
   "Footer": {
     "disclaimer": "Unofficial. Online Na Ba? is not affiliated with any government agency. We only check whether public pages respond."
+  },
+  "Status": {
+    "up": "Online",
+    "slow": "Slow",
+    "down": "Down",
+    "unknown": "No data"
+  },
+  "Categories": {
+    "benefits": "Benefits & contributions",
+    "ids": "IDs & documents",
+    "tax": "Tax & licensing",
+    "others": "Others"
   }
 }
