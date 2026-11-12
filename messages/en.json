@@ -137,5 +137,27 @@
       "limitReached": "You have reached your monitor limit.",
       "generic": "Something went wrong. Please try again."
     }
+  },
+  "Email": {
+    "downSubject": "{name} is down",
+    "downHeading": "{name} is down",
+    "downBody": "{url} has not been responding since {time} (2 checks in a row).",
+    "reason": "Reason: {reason}",
+    "upSubject": "{name} is back up",
+    "upHeading": "{name} is back up",
+    "upBody": "{url} is responding again as of {time}.",
+    "downFor": "Outage lasted: {duration}",
+    "duration": "{hours, plural, =0 {} one {# hr } other {# hrs }}{minutes, plural, =0 {} other {# min}}",
+    "viewDashboard": "View in dashboard",
+    "footer": "You got this because email alerts are on for {name} on Online Na Ba?.",
+    "unsubscribe": "Stop alerts for this monitor",
+    "reasons": {
+      "timeout": "no response within 15 seconds",
+      "blocked": "private address",
+      "dns": "domain not found",
+      "refused": "connection refused",
+      "tls": "SSL certificate problem",
+      "other": "{error}"
+    }
   }
 }

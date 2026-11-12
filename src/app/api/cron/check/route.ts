@@ -1,6 +1,7 @@
 import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 import { STATUS_TAG } from "@/lib/status";
+import { sendPendingAlerts, type AlertRunResult } from "@/lib/alerts/send";
 import { checkUrl, mapWithConcurrency } from "@/lib/check";
 import { isAuthorizedCronRequest } from "@/lib/cron-auth";
 import { checkerUserAgent } from "@/lib/env";
@@ -18,7 +19,7 @@ const CONCURRENCY = 20;
 /**
  * Called every 5 minutes by Supabase Cron (pg_cron + pg_net).
  * Checks every active monitor once, saves the results and updates incidents.
- * Alert emails are added in Week 4.
+ * Then sends any pending "down" / "back up" alert emails.
  */
 export async function POST(request: Request) {
   if (!isAuthorizedCronRequest(request.headers.get("authorization"), process.env.CRON_SECRET)) {
@@ -64,8 +65,7 @@ export async function POST(request: Request) {
   }));
 
   // Saves the checks and opens/closes incidents in one transaction (see
-  // record_checks in supabase/migrations). Returns the incidents that changed,
-  // which Week 4 turns into alert emails.
+  // record_checks in supabase/migrations). Returns the incidents that changed.
   let events: IncidentEvent[] = [];
   if (results.length > 0) {
     const { data, error: saveError } = await supabase.rpc("record_checks", { p_checks: results });
@@ -82,6 +82,16 @@ export async function POST(request: Request) {
     revalidateTag(STATUS_TAG, "max");
   }
 
+  // Email alerts for incidents that opened/closed (this run or earlier runs
+  // whose sends failed). A problem here must not fail the check run itself.
+  let alerts: AlertRunResult | { error: string };
+  try {
+    alerts = await sendPendingAlerts(supabase);
+  } catch (err) {
+    console.error("[cron/check] alerts failed", err);
+    alerts = { error: err instanceof Error ? err.message : String(err) };
+  }
+
   const summary = {
     checked: results.length,
     up: results.filter((r) => r.status === "up").length,
@@ -89,6 +99,7 @@ export async function POST(request: Request) {
     down: results.filter((r) => r.status === "down").length,
     incidentsOpened: events.filter((e) => e.event === "opened").length,
     incidentsClosed: events.filter((e) => e.event === "closed").length,
+    alerts,
     durationMs: Date.now() - startedAt,
   };
   console.log("[cron/check]", JSON.stringify(summary));

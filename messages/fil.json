@@ -137,5 +137,27 @@
       "limitReached": "Naabot mo na ang limitasyon ng monitor.",
       "generic": "May nangyaring mali. Subukang muli."
     }
+  },
+  "Email": {
+    "downSubject": "Hindi ma-access ang {name}",
+    "downHeading": "Hindi ma-access ang {name}",
+    "downBody": "Hindi sumasagot ang {url} mula {time} (2 sunod-sunod na pagsusuri).",
+    "reason": "Dahilan: {reason}",
+    "upSubject": "Online na ulit ang {name}",
+    "upHeading": "Online na ulit ang {name}",
+    "upBody": "Sumasagot na ulit ang {url} simula {time}.",
+    "downFor": "Tagal ng outage: {duration}",
+    "duration": "{hours, plural, =0 {} other {# oras }}{minutes, plural, =0 {} other {# minuto}}",
+    "viewDashboard": "Tingnan sa dashboard",
+    "footer": "Natanggap mo ito dahil nakabukas ang email alerts para sa {name} sa Online Na Ba?.",
+    "unsubscribe": "Itigil ang alerts para sa monitor na ito",
+    "reasons": {
+      "timeout": "walang sagot sa loob ng 15 segundo",
+      "blocked": "pribadong address",
+      "dns": "hindi mahanap ang domain",
+      "refused": "tinanggihan ang koneksyon",
+      "tls": "problema sa SSL certificate",
+      "other": "{error}"
+    }
   }
 }
