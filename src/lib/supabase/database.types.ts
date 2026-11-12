@@ -8,6 +8,52 @@ export type PlanType = "free" | "pro";
 export type Locale = "fil" | "en";
 export type MonitorCategory = "benefits" | "ids" | "tax" | "others";
 
+export type ResponseTimeRange = "24h" | "7d";
+
+/** One row of status_board(). Uptime values are percentages (0–100), null when no checks yet. */
+export interface StatusBoardRow {
+  id: string;
+  slug: string;
+  name: string;
+  url: string;
+  category: MonitorCategory;
+  sort_order: number;
+  last_status: CheckStatus | null;
+  last_status_code: number | null;
+  last_response_ms: number | null;
+  last_checked_at: string | null;
+  uptime_24h: number | null;
+  uptime_7d: number | null;
+  uptime_30d: number | null;
+}
+
+/** One point of response_times(). */
+export interface ResponseTimePoint {
+  bucket: string;
+  avg_response_ms: number | null;
+  total: number;
+  down: number;
+}
+
+/** Input row for record_checks(). */
+export interface CheckInput {
+  monitor_id: string;
+  status: CheckStatus;
+  status_code: number | null;
+  response_time_ms: number | null;
+  error: string | null;
+  checked_at: string;
+}
+
+/** An incident opened or closed by record_checks(). */
+export interface IncidentEvent {
+  event: "opened" | "closed";
+  incident_id: number;
+  monitor_id: string;
+  started_at: string;
+  ended_at: string | null;
+}
+
 export interface Database {
   public: {
     Tables: {
@@ -144,7 +190,20 @@ export interface Database {
       };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      status_board: {
+        Args: { p_slug?: string };
+        Returns: StatusBoardRow[];
+      };
+      response_times: {
+        Args: { p_monitor_id: string; p_range?: ResponseTimeRange };
+        Returns: ResponseTimePoint[];
+      };
+      record_checks: {
+        Args: { p_checks: CheckInput[] };
+        Returns: IncidentEvent[];
+      };
+    };
     Enums: {
       check_status: CheckStatus;
       plan_type: PlanType;
