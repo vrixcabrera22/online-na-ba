@@ -9,6 +9,7 @@ const pill = "rounded-full px-3 py-1.5 text-sm font-medium";
 export function SiteHeader() {
   const t = useTranslations("Header");
   const tAuth = useTranslations("Auth");
+  const tAbout = useTranslations("About");
 
   return (
     <header className="border-b border-border bg-surface">
@@ -17,6 +18,10 @@ export function SiteHeader() {
           {t("siteName")}
         </Link>
         <div className="flex items-center gap-2">
+          {/* No room on phones: there, About lives in the footer. */}
+          <Link href="/about" className={`${pill} hidden text-muted hover:text-foreground sm:inline`}>
+            {tAbout("navLabel")}
+          </Link>
           {/* Both read the current URL. On pages whose URL isn't known at build
               time (e.g. /dashboard/[id]) that needs a Suspense boundary; the
               fallbacks are the same size, so nothing shifts. */}
