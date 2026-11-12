@@ -11,7 +11,14 @@
   "Home": {
     "title": "Online na ba ang mga website ng gobyerno?",
     "tagline": "Sinusuri namin ang Pag-IBIG, SSS, PhilHealth at iba pa bawat 5 minuto, para malaman mo kung kailan pinakamainam subukan.",
-    "comingSoon": "Nangangalap pa kami ng datos. Malapit nang lumabas ang status board."
+    "summary": "{online} sa {total} ang online ngayon",
+    "summaryAll": "Online ngayon ang lahat ng {total} website",
+    "lastChecked": "Huling sinuri",
+    "responseTime": "Bilis ng sagot",
+    "uptime24h": "Uptime (24 oras)",
+    "uptime7d": "Uptime (7 araw)",
+    "viewDetails": "Tingnan ang detalye ng {name}",
+    "empty": "Wala pang datos. Bumalik pagkalipas ng ilang minuto."
   },
   "Footer": {
     "disclaimer": "Hindi opisyal. Walang kaugnayan ang Online Na Ba? sa anumang ahensya ng gobyerno. Sinusuri lang namin kung sumasagot ang mga pampublikong pahina."

@@ -1,5 +1,6 @@
 import "server-only";
 import { cacheLife, cacheTag } from "next/cache";
+import { displayStatus, type DisplayStatus } from "@/lib/format";
 import { createPublicClient } from "@/lib/supabase/public";
 import type {
   MonitorCategory,
@@ -26,6 +27,17 @@ function statusCache() {
 /** Display order of categories on the board. */
 export const CATEGORY_ORDER: readonly MonitorCategory[] = ["benefits", "ids", "tax", "others"];
 
+/** A status board row plus the status to display (handles stale/missing data). */
+export interface Site extends StatusBoardRow {
+  status: DisplayStatus;
+}
+
+function toSite(row: StatusBoardRow): Site {
+  // Date.now() inside a "use cache" scope is evaluated when the cache entry is
+  // built, so staleness is accurate to within the cache lifetime (≤ 5 min).
+  return { ...row, status: displayStatus(row.last_status, row.last_checked_at, Date.now()) };
+}
+
 export interface Outage {
   id: number;
   startedAt: string;
@@ -33,20 +45,21 @@ export interface Outage {
   durationSeconds: number | null;
 }
 
-export async function getStatusBoard(): Promise<StatusBoardRow[]> {
+export async function getStatusBoard(): Promise<Site[]> {
   "use cache";
   statusCache();
   const { data, error } = await createPublicClient().rpc("status_board", {});
   if (error) throw new Error(`status_board failed: ${error.message}`);
-  return data ?? [];
+  return (data ?? []).map(toSite);
 }
 
-export async function getSite(slug: string): Promise<StatusBoardRow | null> {
+export async function getSite(slug: string): Promise<Site | null> {
   "use cache";
   statusCache();
   const { data, error } = await createPublicClient().rpc("status_board", { p_slug: slug });
   if (error) throw new Error(`status_board(${slug}) failed: ${error.message}`);
-  return data?.[0] ?? null;
+  const row = data?.[0];
+  return row ? toSite(row) : null;
 }
 
 export async function getResponseTimes(

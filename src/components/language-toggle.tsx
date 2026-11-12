@@ -18,7 +18,7 @@ export function LanguageToggle() {
       href={pathname}
       locale={other}
       aria-label={`${t("languageLabel")}: ${t("switchTo")}`}
-      className="rounded-full border border-current/20 px-3 py-1.5 text-sm font-medium hover:bg-current/5"
+      className="rounded-full border border-border px-3 py-1.5 text-sm font-medium hover:bg-unknown-bg"
     >
       {t("switchTo")}
     </Link>
