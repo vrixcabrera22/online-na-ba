@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "vitest run",
     "typecheck": "next typegen && tsc --noEmit",
-    "test:rls": "node --env-file=.env.local scripts/rls-check.mjs"
+    "test:rls": "node --env-file=.env.local scripts/rls-check.mjs",
+    "launch-check": "node --env-file=.env.local scripts/launch-check.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
