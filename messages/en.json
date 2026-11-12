@@ -17,7 +17,6 @@
     "responseTime": "Response time",
     "uptime24h": "Uptime (24 h)",
     "uptime7d": "Uptime (7 days)",
-    "viewDetails": "View details for {name}",
     "empty": "No data yet. Check back in a few minutes."
   },
   "Footer": {
@@ -61,5 +60,15 @@
     "duration": "{hours, plural, =0 {} one {# hr } other {# hrs }}{minutes, plural, =0 {} other {# min}}",
     "chartAverage": "Average response time: {avg}.",
     "chartDown": "Down in {down} of {total} checks."
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "body": "The link may be wrong, or the page no longer exists.",
+    "home": "Back to the status board"
+  },
+  "Error": {
+    "title": "Something went wrong",
+    "body": "We could not load the data right now. Please try again shortly.",
+    "retry": "Try again"
   }
 }

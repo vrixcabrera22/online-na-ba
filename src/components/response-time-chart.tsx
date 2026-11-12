@@ -1,28 +1,18 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useLocale, useTranslations } from "next-intl";
-import { useId, useState } from "react";
-import {
-  Area,
-  CartesianGrid,
-  ComposedChart,
-  ResponsiveContainer,
-  Scatter,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { useState } from "react";
 import { formatResponseTime } from "@/lib/format";
 import type { ResponseTimePoint, ResponseTimeRange } from "@/lib/supabase/database.types";
+import type { ChartRow } from "./response-time-plot";
 
-interface ChartRow {
-  t: number;
-  ms: number | null;
-  /** Set (to 0, the bottom of the chart) when the bucket had down checks. */
-  downMarker: number | null;
-  down: number;
-  total: number;
-}
+// Only the drawing is lazy: the title, range switch and summary render with
+// the page (they're often its largest text), and Recharts loads after.
+const ResponseTimePlot = dynamic(() => import("./response-time-plot"), {
+  ssr: false,
+  loading: () => <div className="h-full w-full animate-pulse rounded-lg bg-unknown-bg" />,
+});
 
 function toRows(points: ResponseTimePoint[]): ChartRow[] {
   return points.map((p) => ({
@@ -47,26 +37,12 @@ export function ResponseTimeChart({
   const t = useTranslations("Site");
   const locale = useLocale();
   const [range, setRange] = useState<ResponseTimeRange>("24h");
-  const gradientId = useId();
 
   const rows = toRows(data[range]);
   const total = rows.reduce((a, r) => a + r.total, 0);
   const down = rows.reduce((a, r) => a + r.down, 0);
   const timed = rows.filter((r) => r.ms !== null);
   const avg = timed.length ? timed.reduce((a, r) => a + (r.ms ?? 0), 0) / timed.length : null;
-
-  // Times on the chart are Manila time, whatever the visitor's own time zone.
-  const tick = new Intl.DateTimeFormat(locale, {
-    timeZone: "Asia/Manila",
-    ...(range === "24h" ? { hour: "numeric", minute: "2-digit" } : { month: "short", day: "numeric" }),
-  });
-  const full = new Intl.DateTimeFormat(locale, {
-    timeZone: "Asia/Manila",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  });
 
   return (
     <div>
@@ -97,60 +73,9 @@ export function ResponseTimeChart({
             {t("chartAverage", { avg: formatResponseTime(avg, locale) })}
             {down > 0 && <> {t("chartDown", { down, total })}</>}
           </p>
-          {/* Fixed height so the page doesn't jump when the chart mounts. */}
+          {/* Fixed height so the page doesn't jump when the drawing loads. */}
           <div className="mt-4 h-64 w-full" aria-hidden="true">
-            <ResponsiveContainer width="100%" height="100%">
-              <ComposedChart data={rows} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
-                <defs>
-                  <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="var(--accent)" stopOpacity={0.3} />
-                    <stop offset="100%" stopColor="var(--accent)" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid stroke="var(--border)" vertical={false} />
-                <XAxis
-                  dataKey="t"
-                  type="number"
-                  scale="time"
-                  domain={["dataMin", "dataMax"]}
-                  tickFormatter={(v: number) => tick.format(v)}
-                  stroke="var(--muted)"
-                  fontSize={12}
-                  minTickGap={24}
-                />
-                <YAxis
-                  stroke="var(--muted)"
-                  fontSize={12}
-                  width={56}
-                  tickFormatter={(v: number) => formatResponseTime(v, locale)}
-                />
-                <Tooltip
-                  labelFormatter={(v) => full.format(Number(v))}
-                  formatter={(value, name, item) => {
-                    const row = (item as { payload?: ChartRow }).payload;
-                    if (name === "downMarker") return [t("downPoint"), ""];
-                    if (row && row.ms === null) return [t("downPoint"), ""];
-                    return [formatResponseTime(Number(value), locale), t("chartTitle")];
-                  }}
-                  contentStyle={{
-                    background: "var(--surface)",
-                    border: "1px solid var(--border)",
-                    borderRadius: 8,
-                    color: "var(--foreground)",
-                  }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="ms"
-                  stroke="var(--accent)"
-                  strokeWidth={2}
-                  fill={`url(#${gradientId})`}
-                  connectNulls={false}
-                  isAnimationActive={false}
-                />
-                <Scatter dataKey="downMarker" fill="var(--down)" isAnimationActive={false} />
-              </ComposedChart>
-            </ResponsiveContainer>
+            <ResponseTimePlot rows={rows} range={range} />
           </div>
         </>
       )}

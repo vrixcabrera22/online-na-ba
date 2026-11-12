@@ -21,7 +21,6 @@ export function SiteCard({ site }: { site: Site }) {
     <li>
       <Link
         href={`/status/${site.slug}`}
-        aria-label={t("viewDetails", { name: site.name })}
         className={`block h-full rounded-xl border border-border border-l-4 ${ACCENT[site.status]} bg-surface p-4 shadow-sm transition hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
       >
         <div className="flex items-start justify-between gap-3">

@@ -6,6 +6,7 @@ import { OutageList } from "@/components/outage-list";
 import { RelativeTime } from "@/components/relative-time";
 import { ResponseTimeChart } from "@/components/response-time-chart";
 import { StatusBadge } from "@/components/status-badge";
+import { localeAlternates } from "@/i18n/alternates";
 import { Link } from "@/i18n/navigation";
 import { formatResponseTime, formatUptime } from "@/lib/format";
 import { getRecentOutages, getResponseTimes, getSite, getStatusBoard } from "@/lib/status";
@@ -26,6 +27,7 @@ export async function generateMetadata({
   return {
     title: t("metaTitle", { name: site.name }),
     description: t("metaDescription", { name: site.name }),
+    alternates: localeAlternates(locale, `/status/${slug}`),
   };
 }
 

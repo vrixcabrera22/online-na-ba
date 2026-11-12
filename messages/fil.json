@@ -17,7 +17,6 @@
     "responseTime": "Bilis ng sagot",
     "uptime24h": "Uptime (24 oras)",
     "uptime7d": "Uptime (7 araw)",
-    "viewDetails": "Tingnan ang detalye ng {name}",
     "empty": "Wala pang datos. Bumalik pagkalipas ng ilang minuto."
   },
   "Footer": {
@@ -61,5 +60,15 @@
     "duration": "{hours, plural, =0 {} other {# oras }}{minutes, plural, =0 {} other {# minuto}}",
     "chartAverage": "Karaniwang bilis ng sagot: {avg}.",
     "chartDown": "Hindi ma-access sa {down} sa {total} na pagsusuri."
+  },
+  "NotFound": {
+    "title": "Hindi makita ang pahinang ito",
+    "body": "Baka mali ang link, o wala na ang pahina.",
+    "home": "Bumalik sa status board"
+  },
+  "Error": {
+    "title": "May nangyaring mali",
+    "body": "Hindi namin ma-load ang datos ngayon. Subukang muli maya-maya.",
+    "retry": "Subukang muli"
   }
 }
