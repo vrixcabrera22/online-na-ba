@@ -12,7 +12,8 @@
     "test:rls": "node --env-file=.env.local scripts/rls-check.mjs",
     "launch-check": "node --env-file=.env.local scripts/launch-check.mjs",
     "screenshots": "node scripts/screenshots.mjs",
-    "test:db": "node supabase/tests/run.mjs"
+    "test:db": "node supabase/tests/run.mjs",
+    "findings": "node --env-file=.env.local scripts/findings.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
