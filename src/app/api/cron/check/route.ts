@@ -32,7 +32,12 @@ export async function POST(request: Request) {
 
   if (loadError) {
     console.error("[cron/check] failed to load monitors", loadError);
-    return NextResponse.json({ error: "failed to load monitors" }, { status: 500 });
+    // Only the scheduler (holding CRON_SECRET) can reach this point, so it is
+    // safe to include the database error to make failures debuggable.
+    return NextResponse.json(
+      { error: "failed to load monitors", detail: loadError.message },
+      { status: 500 },
+    );
   }
 
   // One timestamp per run, so every row from this run lines up on charts.
@@ -49,7 +54,10 @@ export async function POST(request: Request) {
     const { error: insertError } = await supabase.from("checks").insert(results);
     if (insertError) {
       console.error("[cron/check] failed to save checks", insertError);
-      return NextResponse.json({ error: "failed to save checks" }, { status: 500 });
+      return NextResponse.json(
+        { error: "failed to save checks", detail: insertError.message },
+        { status: 500 },
+      );
     }
   }
 
