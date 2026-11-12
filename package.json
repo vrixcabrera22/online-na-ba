@@ -10,7 +10,9 @@
     "test": "vitest run",
     "typecheck": "next typegen && tsc --noEmit",
     "test:rls": "node --env-file=.env.local scripts/rls-check.mjs",
-    "launch-check": "node --env-file=.env.local scripts/launch-check.mjs"
+    "launch-check": "node --env-file=.env.local scripts/launch-check.mjs",
+    "screenshots": "node scripts/screenshots.mjs",
+    "test:db": "node supabase/tests/run.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
@@ -23,12 +25,14 @@
     "server-only": "^0.0.1"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.16",
     "@tailwindcss/turbopack": "4.3.3",
     "@types/node": "^24.19.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
+    "puppeteer-core": "^25.17.0",
     "tailwindcss": "4.3.3",
     "typescript": "^5",
     "vitest": "^5.1.0"
