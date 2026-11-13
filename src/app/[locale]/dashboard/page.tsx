@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { signOut } from "@/app/[locale]/(auth)/actions";
 import { MonitorCard } from "@/components/monitor-card";
 import { MonitorForm } from "@/components/monitor-form";
+import { Link } from "@/i18n/navigation";
 import { requireUser } from "@/lib/auth";
 import { DEMO_EMAIL } from "@/lib/demo";
 import { getMyLimit, getMyMonitors } from "@/lib/monitors";
@@ -37,6 +38,10 @@ async function Dashboard({ locale }: { locale: string }) {
 
   return (
     <div className="space-y-8">
+      <Link href="/" className="inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline">
+        <span aria-hidden="true">←</span> {t("backToBoard")}
+      </Link>
+
       <header className="flex flex-wrap items-start justify-between gap-3">
         <div className="space-y-1">
           <h1 className="text-2xl font-bold sm:text-3xl">{t("title")}</h1>

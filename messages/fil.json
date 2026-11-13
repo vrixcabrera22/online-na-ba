@@ -130,6 +130,7 @@
     "details": "Tingnan ang detalye",
     "limitReached": "Naabot mo na ang {max} na monitor ng libreng plan. Burahin ang isa para makapagdagdag.",
     "back": "Bumalik sa dashboard",
+    "backToBoard": "Mga website ng gobyerno",
     "notFound": "Hindi makita ang monitor na ito.",
     "errors": {
       "nameRequired": "Maglagay ng pangalan (hanggang 100 character).",
