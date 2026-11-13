@@ -38,7 +38,10 @@ async function Dashboard({ locale }: { locale: string }) {
 
   return (
     <div className="space-y-8">
-      <Link href="/" className="inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline">
+      <Link
+        href="/"
+        className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-1.5 text-sm font-medium hover:bg-unknown-bg"
+      >
         <span aria-hidden="true">←</span> {t("backToBoard")}
       </Link>
 
